@@ -12,19 +12,21 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./database/Create_database.sql:/docker-entrypoint-initdb.d/Create_database.sql:ro
-  client:
-    container_name: frontend
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   container_name: pgadmin_container
-  #   restart: always
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@example.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin123
-  #   ports:
-  #     - "5050:80"
-  #   depends_on:
-  #     - postgres
 
+  server:
+    container_name: backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: REMPH
 volumes:
   pgdata:

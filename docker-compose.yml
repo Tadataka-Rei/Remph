@@ -12,17 +12,19 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./database/Create_database.sql:/docker-entrypoint-initdb.d/Create_database.sql:ro
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin_container
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
+  client:
+    container_name: frontend
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin_container
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@example.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin123
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - postgres
 
 volumes:
   pgdata:
